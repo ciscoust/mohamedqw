@@ -1,0 +1,70 @@
+{
+  "entities": {
+    "User": {
+      "title": "User Profile",
+      "description": "User account information and app preferences.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string" },
+        "displayName": { "type": "string" },
+        "photoURL": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "lastLogin": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "email"]
+    },
+    "Goal": {
+      "title": "Goal",
+      "description": "A specific goal or desire the user is working towards.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "title": { "type": "string" },
+        "desire": { "type": "string" },
+        "deservednessRationale": { "type": "string" },
+        "barriersRemoved": { "type": "boolean" },
+        "preparationSteps": { "type": "string" },
+        "feelingDescription": { "type": "string" },
+        "phase": { "type": "string", "enum": ["before", "during", "after", "completed"] },
+        "sacrificeType": { "type": "string" },
+        "offeringType": { "type": "string" },
+        "vowType": { "type": "string" },
+        "covenantType": { "type": "string" },
+        "magnetStrength": { "type": "number" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" },
+        "isCompleted": { "type": "boolean" }
+      },
+      "required": ["userId", "title", "desire", "phase"]
+    },
+    "RitualLog": {
+      "title": "Ritual Log",
+      "description": "Record of a daily ritual completion.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string" },
+        "goalId": { "type": "string" },
+        "ritualName": { "type": "string", "enum": ["fajr", "dhuhr", "asr", "maghrib", "isha"] },
+        "timestamp": { "type": "string", "format": "date-time" },
+        "date": { "type": "string" }
+      },
+      "required": ["userId", "ritualName", "timestamp", "date"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profile data."
+    },
+    "/users/{userId}/goals/{goalId}": {
+      "schema": "Goal",
+      "description": "Goals specific to a user."
+    },
+    "/users/{userId}/rituals/{ritualId}": {
+      "schema": "RitualLog",
+      "description": "Daily ritual completion logs for a user."
+    }
+  }
+}
